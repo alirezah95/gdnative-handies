@@ -1,0 +1,15 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"label": "gdnative build",
+			"command": "scons", // Or cmake in case you are using cmake.
+			"args": [
+				// These args are passed to your build system.
+				"platform=linux"
+			],
+			"group": "build"
+		}
+	]
+}
