@@ -118,7 +118,7 @@ options.Add(
 options.Add(
     key='library_dir',
     help='Path to desired out put foldel.',
-    default='../Lib/'
+    default='../lib/'
 )
 
 env = Environment(CXXFLAGS="-std=c++17", sources=[], ENV=os.environ)
