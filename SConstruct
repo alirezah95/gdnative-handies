@@ -1,5 +1,6 @@
 import os
 import sys
+from SCons.Executor import execute_nothing
 from SCons.Script import *
 
 sys.tracebacklimit = 0
@@ -53,8 +54,8 @@ def no_verbose():
 options = Variables([], ARGUMENTS)
 options.Add(EnumVariable(
     key='platform',
-    help='Target Platform',
-    default='none',
+    help='Specifies target platform to build for',
+	default='none',
     allowed_values=['none', 'linux', 'android', 'windows', 'javascript'],
     ignorecase=2
 ))
@@ -66,14 +67,14 @@ options.Add(EnumVariable(
 ))
 options.Add(PathVariable(
     key='gd_library_dir',
-    help='Path to .a library generating from godot-cpp bindings.',
+    help='Path to .a library built from godot-cpp bindings.',
     default=os.environ.get('GD_LIBRARY_DIR'),
     validator=PathVariable.PathIsDir
 ))
 options.Add(PathVariable(
     key='gd_library_name',
     help="""Name of the .a library generating from godot-cpp headers. By
-     default it uses name which is used in godot main SConstruct.""",
+     default it uses name which is used in godot-cpp SConstruct.""",
     default=None,
     validator=PathVariable.PathIsFile
 ))
@@ -120,9 +121,12 @@ options.Add(
     default='../Lib/'
 )
 
-env = Environment(CXXFLAGS="-std=c++17", sources=[])
+env = Environment(CXXFLAGS="-std=c++17", sources=[], ENV=os.environ)
 options.Update(env=env)
 Help(options.GenerateHelpText(env))
+
+if env.GetOption("help"):
+    Return()
 
 if ARGUMENTS.get("VERBOSE") != "1":
     no_verbose()
