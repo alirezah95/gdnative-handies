@@ -116,7 +116,7 @@ options.Add(
 	default=''
 )
 options.Add(
-    key='library_dir',
+    key='build_path',
     help='Path to desired out put foldel.',
     default='../lib/'
 )
@@ -294,7 +294,7 @@ elif env['platform'] == 'javascript':
     
 
 
-outpath = env['library_dir']
+outpath = env['build_path']
 if not outpath.endswith('/'):
 	outpath += "/"
 if env['platform'] == 'linux':
